@@ -4,7 +4,7 @@
 // http://www.phpied.com/3-ways-to-define-a-javascript-class/
 
 
-var bankAccount = function(accountHolderName, initialAmount){
+var BankAccount = function(accountHolderName, initialAmount){
     this.name = accountHolderName;
     this.amount = initialAmount;
     this.currentAmount = initialAmount;
@@ -13,20 +13,25 @@ var bankAccount = function(accountHolderName, initialAmount){
         return Math.floor(this.currentAmount / 1000) * 100;
     }
 
-    bankAccount.prototype.makeWithdrawal = function(amount){
+    BankAccount.prototype.makeWithdrawal = function(amount){
         this.currentAmount -= amount;
     }
 }
 
-var savingsAccount = function(beneficiaryAccount){
+var SavingsAccount = function(beneficiaryAccount){
     this.beneficiaryAccount = beneficiaryAccount;
-    bankAccount.call(this, beneficiaryAccount, 25);
+    BankAccount.call(this, beneficiaryAccount, 25);
     this.overdraftProtection = function(){
         console.log("no protection");
     }
 }
 
-savingsAccount.prototype = Object.create(bankAccount.prototype);
-savingsAccount.prototype.constructor = savingsAccount;
+SavingsAccount.prototype = Object.create(BankAccount.prototype);
+SavingsAccount.prototype.constructor = SavingsAccount;
 
+var account = new SavingsAccount("test");
+console.log(account.name);
+
+var regular = new BankAccount("mark", 100);
+console.log(regular.beneficiaryAccount);
 // var checkingAccount = 
